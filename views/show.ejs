@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>show查看相册</title>
+    <link rel="stylesheet" href="./css/show.css">
+</head>
+<body>
+    <h1>show查看相册</h1>
+    <p>选择查看的相册：
+            <select name="dirname" id="dirname">
+                    <!-- 获取数据库 相册名称 -->
+                    <%for(var i=0;i<dirList.length;i++){%>
+                       <option value='<%=dirList[i]%>'><%=dirList[i]%></option>
+                    <%}%>
+            </select>
+    </p>
+    <div id='show'>
+
+    </div>
+    <p><a href="/">返回首页</a></p>
+</body>
+</html>
+<script src="js/jquery-1.12.4.js"></script>
+<script>
+        $('#dirname').change(function(){
+            photoImg()
+        })
+        function photoImg(){
+            var dirname=$('#dirname').val()
+            $('#show').html('')
+            $.get('/getPicture','dirname='+dirname,function(data){
+                // console.log(data.dirname)
+                var str='<ul>'
+                for(var i=0;i<data.dirList.length;i++){
+                    str+="<li><img src='/"+dirname+"/"+data.dirList[i]+"'/></li>"
+                }
+                str+='</ul>'
+                $('#show').html(str)
+            })
+        }
+        photoImg()
+</script>
