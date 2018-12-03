@@ -13,28 +13,17 @@
        <ul>
            <%for(var i=0;i<dirList.length;i++){%>
                 <li>
-                    <div></div>
-                    <span><%=dirList[i]%></span>
+                    <div><img src='' alt=""></div>
+                    <span><%= dirList[i]%></span>
                 </li>
            <%}%>
-       </ul>
-       <ul>
-           <li>
-                <%for(var i=0;i<imgList.length;i++){%>
-                        <li>
-                            <div>
-                               
-                            </div>
-                            <span><%=dirList[i]%></span>
-                        </li>
-                   <%}%>
-           </li>
        </ul>
     </div>
     <p><a href="/upload">上传图片</a>
      <a href="/show">查看图片</a>
     <a href="/add">新建相册</a>
-    <a href="/del">删除相册</a></p>
+    <a href="/del">删除相册</a>
+    <a href="/alter">修改相册</a></p>
 </body>
 </html>
 <script src="js/jquery-1.12.4.js"></script>

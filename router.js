@@ -20,28 +20,21 @@ exports.index=function(req,res){
                     //是文件夹 添加到数组
                     // 相册名称 添加成数组
                     dirList.push(value)
-                    fs.readdir('./upload/'+value,(err,files)=>{
-                        // if(files[0]==undefined){
-                        //     console.log('相册是空的')
-                        // }else{
-                        //     imgList.push(files[0])
-                        // }
-                        imgList.push(files[0])
+                    fs.readdir('./upload/'+value,(err,files2)=>{
+                        imgList.push(files2[0])
+
+                           //如果结束，直接渲染
+                        if(index==files.length-1){
+                            res.render('index',{dirList,imgList})
+                        }
                     })
                 }
-                //如果结束，直接渲染
-                if(index==files.length-1){
-                    res.render('index',{dirList,imgList})
-                }
+             
             })
 
         })
         // res.render('upload',{dirList}) 
     })
-}
-// 获取相册名称 数组
-exports.upload=function(req,res){
-    getdirName(res,'upload')
 }
 //上传图片 选择图片  post数据处理
 exports.uploadPicture=function(req,res){
@@ -110,9 +103,21 @@ exports.addPicture=function(req,res){
         res.send('<h4>创建成功</h4><h5><a href="/">返回首页</a></h5>')
     })
 }
+//修改相册名称
+exports.alterPicture=function(req,res){
+    var oldname=__dirname+'/upload/'+req.query.dirname
+    var altername=__dirname+'/upload/'+req.query.alterName
+    fs.rename(oldname,altername,(err)=>{
+       if(err){
+           res.send('<h2>改名失败</h2><h4><a href="/alter">重新修改</a></h4>')
+       }
+       res.send('<h2>改名成功</h2><h4><a href="/">返回首页</a></h4>')
+   })
+}
 //删除图片
 exports.delPicture=function(req,res){
-    var delName=req.query.delName
+    var delName=req.query.dirname
+    // var delName=req.query.delName
     var path='./upload/'+delName
     var files = [];
     // 判断 文件夹是否存在
@@ -131,18 +136,23 @@ exports.delPicture=function(req,res){
                 }
                 if(index==files.length-1){
                     fs.rmdirSync(path);
-                    res.send('相册已删除')
+                    res.send('<h1>相册已删除</h1><h3><a href="/">返回首页</a></h3>')
                 }
             })
         }else{
             fs.rmdirSync(path);
-            res.send('空相册，已删除')
+            res.send('<h1>空相册，已删除</h1><h3><a href="/">返回首页</a></h3>')
         }
 	}else{
         res.send('<h2>文件名输入有误，请重新输入<a href="/del">重新输入</a></h2>')
     }
     
     
+}
+
+// 获取相册名称 数组
+exports.upload=function(req,res){
+    getdirName(res,'upload')
 }
 exports.show=function(req,res){
     getdirName(res,'show')
@@ -151,7 +161,11 @@ exports.add=function(req,res){
     res.render('add',{})
 }
 exports.del=function(req,res){
-    res.render('del',{})
+    getdirName(res,'del')
+}
+// 修盖相册名称 返回获取所有相册名称
+exports.alter=function(req,res){
+    getdirName(res,'alter')
 }
 exports.error=function(req,res){
     res.render('404',{})

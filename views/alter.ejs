@@ -7,16 +7,23 @@
     <title>del删除相册</title>
 </head>
 <body>
-    <h1>del删除相册</h1>
-    <form action="/delPicture" method="get">
+    <h1>chang修改相册</h1>
+
+    <form action="/alterPicture" method="get">
         相册名称：
-        <select name="dirname" id="">
+        <select name="dirname" id="dirname">
                 <%for(var i=0;i<dirList.length;i++){%>
                     <option><%=dirList[i]%></option>
                 <%}%>
-        </select>
-        <input type="submit" value="删除相册">
+            </select>
+        <input type="text" name="alterName"><br>
+        <input type="submit" value="修改相册">
     </form>
+
     <p><a href="/">返回首页</a></p>
 </body>
 </html>
+<script src="js/jquery-1.12.4.js"></script>
+<script>
+  console.log(  $('#dirname>option').length())
+</script>

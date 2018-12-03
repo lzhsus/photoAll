@@ -15,10 +15,13 @@ app.get('/upload',router.upload)
 app.get('/show',router.show)
 app.get('/add',router.add)
 app.get('/del',router.del)
+app.get('/alter',router.alter)
 //获取图片
 app.get('/getPicture',router.getPicture)
 //创建相册
 app.get('/addPicture',router.addPicture)
+//修盖相册的名称
+app.get('/alterPicture',router.alterPicture)
 //删除相册
 app.get('/delPicture',router.delPicture)
 //上传图片
